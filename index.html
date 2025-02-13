@@ -3,90 +3,73 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Per te, amore ❤️</title>
+    <title>Cuori per te</title>
     <style>
         body {
-            background-color: pink;
-            overflow: hidden;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
+            background-color: pink;
+            overflow: hidden;
             position: relative;
+            font-family: Arial, sans-serif;
         }
+
         @keyframes floating-hearts {
             0% { transform: translateY(100vh) scale(0.5); opacity: 1; }
             100% { transform: translateY(-10vh) scale(1.5); opacity: 0; }
         }
+
+        @keyframes explode {
+            0% { transform: scale(1); opacity: 1; }
+            100% { transform: scale(3); opacity: 0; }
+        }
+
         .heart {
             position: absolute;
             color: red;
             font-size: 2em;
-            cursor: pointer;
             animation: floating-hearts 5s linear infinite;
-            transition: transform 0.2s ease-out, opacity 0.2s ease-out;
         }
-        .big-heart {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) scale(0);
-            width: 300px;
-            height: 300px;
-            background: red;
-            text-align: center;
-            color: white;
-            font-size: 24px;
+
+        #message {
+            position: absolute;
+            font-size: 2em;
+            color: red;
             font-weight: bold;
-            padding: 40px;
-            line-height: 30px;
-            border-radius: 50%;
-            transition: transform 0.5s ease-out;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            text-align: center;
+            display: none;
         }
     </style>
 </head>
 <body>
-    <div id="bigHeart" class="big-heart">Hai vinto il mio cuore (anche se era già tuo).<br>Ti amerò per sempre ❤️</div>
+    <div id="message">Hai vinto il mio cuore (anche se era già tuo). Ti amerò per sempre ❤️</div>
 
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            let count = 0;
-            function createHeart() {
-                if (count >= 10) return;
-                const heart = document.createElement("div");
-                heart.classList.add("heart");
-                heart.innerHTML = "❤️";
-                heart.style.left = Math.random() * 90 + "vw";
-                heart.style.top = Math.random() * 90 + "vh";
-                document.body.appendChild(heart);
-                heart.addEventListener("click", () => {
-                    heart.style.transform = "scale(0)";
-                    heart.style.opacity = "0";
-                    setTimeout(() => heart.remove(), 200);
-                    count++;
-                    if (count >= 10) {
-                        document.querySelectorAll(".heart").forEach(h => {
-                            h.style.transform = "scale(0)";
-                            h.style.opacity = "0";
-                            setTimeout(() => h.remove(), 200);
-                        });
-                        setTimeout(() => {
-                            const bigHeart = document.getElementById("bigHeart");
-                            bigHeart.style.display = "flex";
-                            setTimeout(() => {
-                                bigHeart.style.transform = "translate(-50%, -50%) scale(1)";
-                            }, 50);
-                        }, 500);
-                    }
-                });
-                setTimeout(() => heart.remove(), 5000);
-            }
-            setInterval(createHeart, 1000);
-        });
+        function createHeart() {
+            const heart = document.createElement("div");
+            heart.classList.add("heart");
+            heart.innerHTML = "❤️";
+            heart.style.left = Math.random() * 100 + "vw";
+            heart.style.animationDuration = (Math.random() * 3 + 3) + "s";
+            heart.style.fontSize = (Math.random() * 2 + 1) + "em";
+            document.body.appendChild(heart);
+        }
+
+        for (let i = 0; i < 50; i++) {
+            createHeart();
+        }
+
+        setTimeout(() => {
+            document.querySelectorAll(".heart").forEach(heart => {
+                heart.style.animation = "explode 1s forwards";
+            });
+            setTimeout(() => {
+                document.querySelectorAll(".heart").forEach(heart => heart.remove());
+                document.getElementById("message").style.display = "block";
+            }, 1000);
+        }, 5000);
     </script>
 </body>
 </html>

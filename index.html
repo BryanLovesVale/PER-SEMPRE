@@ -26,8 +26,6 @@
             animation: floating-hearts 5s linear infinite;
             transition: transform 0.2s ease-out, opacity 0.2s ease-out;
         }
-        .heart:nth-child(odd) { animation-duration: 4s; }
-        .heart:nth-child(even) { animation-duration: 6s; }
         .big-heart {
             display: none;
             position: fixed;
@@ -48,7 +46,6 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            text-align: center;
         }
     </style>
 </head>
@@ -56,7 +53,7 @@
     <div id="bigHeart" class="big-heart">Hai vinto il mio cuore (anche se era già tuo).<br>Ti amerò per sempre ❤️</div>
 
     <script>
-        window.onload = function() {
+        document.addEventListener("DOMContentLoaded", function() {
             let count = 0;
             function createHeart() {
                 if (count >= 10) return;
@@ -64,7 +61,7 @@
                 heart.classList.add("heart");
                 heart.innerHTML = "❤️";
                 heart.style.left = Math.random() * 90 + "vw";
-                heart.style.top = Math.random() * 80 + "vh";
+                heart.style.top = Math.random() * 90 + "vh";
                 document.body.appendChild(heart);
                 heart.addEventListener("click", () => {
                     heart.style.transform = "scale(0)";
@@ -78,15 +75,18 @@
                             setTimeout(() => h.remove(), 200);
                         });
                         setTimeout(() => {
-                            document.getElementById("bigHeart").style.display = "flex";
-                            document.getElementById("bigHeart").style.transform = "translate(-50%, -50%) scale(1)";
+                            const bigHeart = document.getElementById("bigHeart");
+                            bigHeart.style.display = "flex";
+                            setTimeout(() => {
+                                bigHeart.style.transform = "translate(-50%, -50%) scale(1)";
+                            }, 50);
                         }, 500);
                     }
                 });
                 setTimeout(() => heart.remove(), 5000);
             }
-            setInterval(createHeart, 800);
-        };
+            setInterval(createHeart, 1000);
+        });
     </script>
 </body>
 </html>

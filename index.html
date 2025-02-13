@@ -52,6 +52,7 @@
             heart.classList.add("heart");
             heart.innerHTML = "❤️";
             heart.style.left = Math.random() * 100 + "vw";
+            heart.style.top = Math.random() * 100 + "vh";
             heart.style.animationDuration = (Math.random() * 3 + 3) + "s";
             heart.style.fontSize = (Math.random() * 2 + 1) + "em";
             document.body.appendChild(heart);
@@ -63,7 +64,9 @@
 
         setTimeout(() => {
             document.querySelectorAll(".heart").forEach(heart => {
-                heart.style.animation = "explode 1s forwards";
+                heart.style.animation = "none";
+                heart.style.transform = "scale(3)";
+                heart.style.opacity = "0";
             });
             setTimeout(() => {
                 document.querySelectorAll(".heart").forEach(heart => heart.remove());
@@ -73,3 +76,4 @@
     </script>
 </body>
 </html>
+
